@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 
 const { PORT = 3000 } = process.env
 
+// | CONTROLLERS |
+const { createUser, login } = require('./controllers/users')
+
 // | EXPRESS APP |
 const app = express()
 
@@ -13,6 +16,12 @@ mongoose.connect('mongodb://localhost:27017/filmsdb')
 // | PARSER |
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// | SIGN UP |
+app.post('/signup', createUser)
+
+// | SIGN IN |
+app.post('/signin', login)
 
 // | ROUTES |
 app.use('/users', require('./routes/users'))
