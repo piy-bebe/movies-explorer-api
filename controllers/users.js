@@ -49,7 +49,7 @@ const login = (req, res) => {
       res.send({ token })
     })
     .catch((err) => {
-      res.status(400).send({ message: err.message })
+      return res.status(400).send({ message: err.message })
     })
 }
 
