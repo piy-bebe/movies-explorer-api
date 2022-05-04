@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 
-const movie = mongoose.Schema({
+const { isURL } = require('validator')
+
+const moviesSchema = mongoose.Schema({
   country: {
     type: String,
     required: true,
@@ -23,21 +25,23 @@ const movie = mongoose.Schema({
   },
   image: {
     type: String,
+    validator: [isURL, 'Некорректный URL'],
     required: true,
-    // * link validator
   },
   trailerLink: {
     type: String,
+    validator: [isURL, 'Некорректный URL'],
     required: true,
-    // * link validator
   },
   thumbnail: {
     type: String,
+    validator: [isURL, 'Некорректный URL'],
     required: true,
-    // * link validator
   },
   owner: {
-    // * ref user
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true,
   },
   movieId: {
     type: String,
@@ -52,3 +56,5 @@ const movie = mongoose.Schema({
     required: true,
   },
 })
+
+module.exports = mongoose.model('movies', moviesSchema)

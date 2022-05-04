@@ -2,25 +2,31 @@ const mongoose = require('mongoose')
 
 const bcrypt = require('bcryptjs')
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    unique: true,
-    trim: true,
-    lowercase: true,
-    required: true,
+const { isEmail } = require('validator')
+
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      required: true,
+      validate: [isEmail, 'Некорректная почта'],
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      minlength: 2,
+      maxlength: 30,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    minlength: 2,
-    maxlength: 30,
-    required: true,
-  },
-})
+  { versionKey: false }
+)
 
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })

@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return res.status(401).send({ message: 'Необходима авторизация' })
+    // сгенерировать ошибку
   }
 
   const token = authorization.replace('Bearer ', '')

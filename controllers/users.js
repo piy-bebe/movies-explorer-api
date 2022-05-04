@@ -55,10 +55,13 @@ const login = (req, res) => {
 
 const getUser = (req, res) => {
   Users.findOne({ email: req.body.email })
+    .select('-password -__v')
     .then((user) => {
       if (!user) {
         throw new Error(`Пользователь с почтой: ${req.body.email} не существует!`)
       }
+
+      return res.status(200).send({ data: user })
     })
     .catch((err) => {
       res.status(400).send({ message: err.message })
@@ -78,7 +81,7 @@ const updateUser = (req, res) => {
 
 const getUsers = (req, res) => {
   Users.find({})
-    .select('+password -__v')
+    .select('-password -__v')
     .then((users) => {
       res.status(200).send({ data: users })
     })

@@ -19,7 +19,7 @@ const { validateSignup, validateSignin } = require('./validations/user')
 const app = express()
 
 // | CONNECT DB |
-mongoose.connect('mongodb://localhost:27017/filmsdb')
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb')
 
 // | PARSER |
 app.use(bodyParser.json())
@@ -39,6 +39,7 @@ app.use(auth)
 
 // | ROUTES |
 app.use('/users', require('./routes/users'))
+app.use('/movies', require('./routes/movies'))
 
 // | ERROR LOGGER |
 app.use(errorLogger)
